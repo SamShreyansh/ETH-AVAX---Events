@@ -1,0 +1,26 @@
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.26;
+
+contract eventcontract {
+    event UserRegistered(address indexed user, string name);
+    event ItemAdded(uint256 indexed itemId, string itemName, uint256 quantity);
+    event PaymentReceived(address indexed payer, uint256 amount);
+    event withdrawal(address indexed recipient, uint256 amount);
+
+    function registerUser(address userAddress, string memory userName) external {
+        emit UserRegistered(userAddress, userName);
+    }
+
+    function addItem(uint256 itemid, string memory itemName, uint256 quantity) external {
+        emit ItemAdded(itemid, itemName, quantity);
+    }
+
+    function receivePayment() external payable {
+        emit PaymentReceived(msg.sender, msg.value);
+    }
+
+    function withdraw(uint256 amount) external {
+        payable (msg.sender).transfer (amount);
+        emit withdrawal(msg.sender, amount);
+    }
+}
